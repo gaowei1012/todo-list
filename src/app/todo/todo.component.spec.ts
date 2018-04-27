@@ -1,25 +1,36 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TestBed, async } from '@angular/core/testing';
 import { TodoComponent } from './todo.component';
+import { FormsModule } from '@angular/forms';
+import { Todo } from '../todo';
 
-describe('TodoComponent', () => {
-  let component: TodoComponent;
-  let fixture: ComponentFixture<TodoComponent>;
-
-  beforeEach(async(() => {
+describe('AppComponent', () => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ TodoComponent ]
-    })
-    .compileComponents();
+      imports: [
+        FormsModule
+      ],
+      declarations: [
+        TodoComponent
+      ],
+    });
+  });
+
+  it('should create the app', async(() => {
+    const fixture = TestBed.createComponent(TodoComponent);
+    const app = fixture.debugElement.componentInstance;
+    expect(app).toBeTruthy();
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(TodoComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  it(`should have a newTodo todo`, async(() => {
+    const fixture = TestBed.createComponent(TodoComponent);
+    const app = fixture.debugElement.componentInstance;
+    expect(app.newTodo instanceof Todo).toBeTruthy();
+  }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  it('should display "Todos" in h1 tag', async(() => {
+    const fixture = TestBed.createComponent(TodoComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('h1').textContent).toContain('Todos');
+  }));
 });
